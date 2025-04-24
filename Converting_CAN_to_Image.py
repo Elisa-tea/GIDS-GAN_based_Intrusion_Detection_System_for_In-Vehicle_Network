@@ -10,8 +10,9 @@ user setting
 3. run this code
 """
 
-can_dataset_path = "dataset/Training set/normal_run_data.txt"
+can_dataset_path = "/content/car_dataset/car-hacking-dataset/normal_run_data.txt"
 output_dir = "CAN_image_dataset(L)/Training_set/"
+os.makedirs(output_dir, exist_ok=True)
 
 def one_hot_vector(c):
     # convert element of can_data to one hot vector to select can image position
@@ -83,9 +84,11 @@ def make_can_image(data):
         can_image = np.delete(can_image, (0), axis=0)
 
         # convert (can_img => int type can_img => RGB can_img) to save to png file form
-        int_can_image = can_image.astype(int)
-        image = Image.fromarray(int_can_image)
-        
+        #int_can_image = can_image.astype(int)
+        #image = Image.fromarray(int_can_image)
+        int_can_image = can_image.astype(int)  # Change to uint8 for compatibility
+        image = Image.fromarray(int_can_image.astype(np.uint8))  # Convert to uint8 type
+
 
         # save img file
         image.save(os.path.join(output_dir, f"can_img_{can_img_num}.png"))
