@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from PIL import Image
+import os
 
 """
 user setting 
@@ -10,7 +11,7 @@ user setting
 """
 
 can_dataset_path = "dataset/Training set/normal_run_data.txt"
-
+output_dir = "CAN_image_dataset(L)/Training_set/"
 
 def one_hot_vector(c):
     # convert element of can_data to one hot vector to select can image position
@@ -84,9 +85,11 @@ def make_can_image(data):
         # convert (can_img => int type can_img => RGB can_img) to save to png file form
         int_can_image = can_image.astype(int)
         image = Image.fromarray(int_can_image)
+        
 
         # save img file
-        image.save("CAN_image_dataset(L)/Training_set/can_img_{}.png".format(can_img_num))
+        image.save(os.path.join(output_dir, f"can_img_{can_img_num}.png"))
+        #image.save("CAN_image_dataset(L)/Training_set/can_img_{}.png".format(can_img_num))
         can_img_num += 1
 
     print("making can image complete | the number of images : ", can_img_num)
